@@ -1,0 +1,202 @@
+  $(document).ready(function() {
+               loopAnimation()
+            });
+            // inicio Animacion Deslice
+            // document.addEventListener('load', )
+            
+            var cajaCarros = document.getElementsByClassName('boxContentdrag')[0]
+            var cajaBox = document.getElementsByClassName('bpxdrag')[0]
+            var lis = document.getElementById("menu").getElementsByTagName("li");
+            var botonCall = document.getElementsByClassName('b-quiero')
+            
+            var btonAuto = $('#segurosAutos')
+            var btonVida = $('#segurosVida')
+            var btonDesempleo = $('#segurosDesempleo')
+            
+            
+            var punto = []
+            var anchoWindow = $(window).width();
+            var widthCajaBoxCar = $('.itemleft').width()
+            var widthBoxContentdrag = widthCajaBoxCar * 2
+            
+            cajaCarros.style.width = `${widthBoxContentdrag}px`
+            Draggable.create(".iconleft", {
+             type: "x",
+             edgeResistance: 1,
+             bounds: ".bpxdrag",
+             rotation: 360,
+             onDrag: function () {
+               punto.push(this.pointerX);
+               var k = 0
+               var tamano = punto.length
+               if (tamano > 1) {
+                 posicion_actual = tamano - 1
+                 posicion_anterior = posicion_actual - 1
+                 var actual = punto[posicion_actual]
+                 var anterior = punto[posicion_anterior]
+                 TweenMax.set(".boxContentdrag", { x: this.x * -0.2 + "%" });
+                 if (actual < anterior) {
+                   TweenLite.to('.iconleft', 0.2, { rotation: 180, backgroundColor: "#1CBDCB", zIndex: 0 });
+                   TweenLite.to('.contenedor-home', 0.1, { backgroundImage: "url(http://devskills.mx/wp-content/uploads/2016/04/shutterstock_221215315-638x368.jpg)" }, 0.5)  
+                 }
+                 else {
+                   TweenLite.to('.iconleft', 0.2, { rotation: 0, backgroundColor: "#ED4444", zIndex: 0 });
+                   TweenLite.to('.contenedor-home', 0.1, { backgroundImage: "url(https://blog.endeos.com/wp-content/uploads/2017/01/detectar-dispositivo-movil.png)" }, 0.5)
+                 }
+               }
+             },
+             throwProps: true
+            });
+            function loopAnimation() {
+             TweenMax.set(".iconleft", {  rotation: 180});
+             TweenMax.from('.iconleft', 0.8, {
+               rotation: -360,
+               x: "240px",
+               repeat: 2,
+               transformOrigin: 0,
+               backgroundColor: "#1CBDCB",
+             })
+             TweenMax.to('.contenedor-home', 0.1, { backgroundImage: "url(http://devskills.mx/wp-content/uploads/2016/04/shutterstock_221215315-638x368.jpg)" }, 0.5)
+            }
+            // fin Animacion Deslice
+            lis[0].addEventListener('click', function () {
+            cerrado()
+             BotonQuieroJugueteAdd()
+             $('.contenedor-home').removeClass('inactivo')
+             document.getElementById("checkMenu").checked = false
+             $('.contenedor-particular').hasClass('inactivo') ? '' : $('.contenedor-particular').addClass('inactivo');
+             $('.contenedor-simulador').hasClass('inactivo') ? '' : $('.contenedor-simulador').addClass('inactivo');
+             $('.contenedor-productivo').hasClass('inactivo') ? '' : $('.contenedor-productivo').addClass('inactivo');
+             $('.contenedor-jugueterias').hasClass('inactivo') ? '' : $('.contenedor-jugueterias').addClass('inactivo');
+             $('.contenedor-seguros').hasClass('inactivo') ? '' : $('.contenedor-seguros').addClass('inactivo');
+             $('.Registro').hasClass('inactivo') ? '' : $('.Registro').addClass('inactivo');
+             $('.Chatear').hasClass('inactivo') ? '' : $('.Chatear').addClass('inactivo');
+            
+             TweenMax.from(".contenedor-home", 0.8, { y: -200, opacity: 0, ease: Bounce.easeOut });
+             $('html, body').animate({
+               scrollTop: $(".contenedor-home").offset().top
+             });
+             $('#quiero-llamada').addClass('inactivo');
+             $('#quiero-llamar').addClass('inactivo');
+             $('.legal-aliados').hide()
+             $('.smResult').addClass('inactivo')
+            })
+            lis[1].addEventListener('click', function () {
+                cerrado()
+             BotonQuieroJugueteAdd()
+             $('.contenedor-particular').removeClass('inactivo');
+             document.getElementById("checkMenu").checked = false
+            
+             $('.contenedor-home').hasClass('inactivo') ? '' : $('.contenedor-home').addClass('inactivo');
+             $('.contenedor-simulador').hasClass('inactivo') ? '' : $('.contenedor-simulador').addClass('inactivo');
+             $('.contenedor-productivo').hasClass('inactivo') ? '' : $('.contenedor-productivo').addClass('inactivo');
+             $('.contenedor-jugueterias').hasClass('inactivo') ? '' : $('.contenedor-jugueterias').addClass('inactivo');
+             $('.contenedor-seguros').hasClass('inactivo') ? '' : $('.contenedor-seguros').addClass('inactivo');
+             $('.Registro').hasClass('inactivo') ? '' : $('.Registro').addClass('inactivo');
+             $('.Chatear').hasClass('inactivo') ? '' : $('.Chatear').addClass('inactivo');
+             if ($('input[name=simulacion]').val() == 'si') {
+              $('.smCamp').removeClass('inactivo')
+              $('.boxSimulador').fadeOut()
+             }else{
+              $('.boxSimulador').fadeIn()
+             }
+             $('.legal-aliados').show()
+            $('#quiero-llamada').addClass('inactivo');
+             $('#quiero-llamar').addClass('inactivo');
+             $('.smResult').addClass('inactivo')
+             TweenMax.from(".contenedor-particular", 0.8, { y: -200, opacity: 0, ease: Bounce.easeOut });
+             $('html, body').animate({
+               scrollTop: $(".contenedor-particular").offset().top
+             });
+            })
+            function BotonQuieroJugueteAdd(){
+             for (let i = 0; i < botonCall.length; i++) {
+               if (botonCall[i].classList.contains('inactivo')) {
+                 botonCall[i].classList.remove("inactivo");
+               }                
+             }
+            }
+            function BotonQuieroJugueteRemove(){
+             for (let i = 0; i < botonCall.length; i++) {
+               if (botonCall[i].classList.contains('inactivo')) {
+               }
+               else{
+                 botonCall[i].classList.add("inactivo");
+               }
+             }
+            }
+            lis[2].addEventListener('click', function () {
+                cerrado()
+             
+             BotonQuieroJugueteRemove()
+            
+             $('.contenedor-productivo').removeClass('inactivo');
+             document.getElementById("checkMenu").checked = false
+            
+             $('.contenedor-home').hasClass('inactivo') ? '' : $('.contenedor-home').addClass('inactivo');
+             $('.contenedor-simulador').hasClass('inactivo') ? '' : $('.contenedor-simulador').addClass('inactivo');
+             $('.contenedor-particular').hasClass('inactivo') ? '' : $('.contenedor-particular').addClass('inactivo');
+             $('.contenedor-jugueterias').hasClass('inactivo') ? '' : $('.contenedor-jugueterias').addClass('inactivo');
+             $('.contenedor-seguros').hasClass('inactivo') ? '' : $('.contenedor-seguros').addClass('inactivo');
+             $('.Registro').hasClass('inactivo') ? '' : $('.Registro').addClass('inactivo');
+             $('.Chatear').hasClass('inactivo') ? '' : $('.Chatear').addClass('inactivo');
+            
+             TweenMax.from(".contenedor-productivo", 0.8, { y: -200, opacity: 0, ease: Bounce.easeOut });
+             $('html, body').animate({
+               scrollTop: $(".contenedor-productivo").offset().top
+             });
+             $('#quiero-llamada').addClass('inactivo');
+             $('#quiero-llamar').addClass('inactivo');
+             $('.legal-aliados').show()
+             $('.smResult').addClass('inactivo')
+            })
+            lis[3].addEventListener('click', function () {
+                cerrado()
+             BotonQuieroJugueteAdd()
+             $('.contenedor-seguros').removeClass('inactivo');
+             document.getElementById("checkMenu").checked = false
+            
+             $('.contenedor-home').hasClass('inactivo') ? '' : $('.contenedor-home').addClass('inactivo');
+             $('.contenedor-simulador').hasClass('inactivo') ? '' : $('.contenedor-simulador').addClass('inactivo');
+             $('.contenedor-particular').hasClass('inactivo') ? '' : $('.contenedor-particular').addClass('inactivo');
+             $('.contenedor-productivo').hasClass('inactivo') ? '' : $('.contenedor-productivo').addClass('inactivo');
+              $('.contenedor-jugueterias').hasClass('inactivo') ? '' : $('.contenedor-jugueterias').addClass('inactivo');   
+             $('.Registro').hasClass('inactivo') ? '' : $('.Registro').addClass('inactivo');
+             $('.Chatear').hasClass('inactivo') ? '' : $('.Chatear').addClass('inactivo');
+            
+             TweenMax.from(".contenedor-seguros", 0.8, { y: -200, opacity: 0, ease: Bounce.easeOut });
+             $('html, body').animate({
+               scrollTop: $(".contenedor-seguros").offset().top
+             });
+             $('#quiero-llamada').addClass('inactivo');
+             $('#quiero-llamar').addClass('inactivo');
+             $('.legal-aliados').hide()
+             $('.smResult').addClass('inactivo')
+            })
+            
+            btonAuto.on('click', function () {
+             $('.sauto').removeClass('inactivo')
+             $('.svida').hasClass('inactivo') ? '' : $('.svida').addClass('inactivo');
+             $('.sempleo').hasClass('inactivo') ? '' : $('.sempleo').addClass('inactivo');
+             $('#modalS').modal('show');
+             $('.sauto').fadeIn()
+            })
+            btonVida.on('click', function () {
+             $('.svida').removeClass('inactivo')
+             $('.sauto').hasClass('inactivo') ? '' : $('.sauto').addClass('inactivo');
+             $('.sempleo').hasClass('inactivo') ? '' : $('.sempleo').addClass('inactivo');
+             
+             $('#modalS').modal('show');
+             $('.svida').fadeIn()
+            })
+            btonDesempleo.on('click', function () {
+             $('.sempleo').removeClass('inactivo')
+             $('.sauto').hasClass('inactivo') ? '' : $('.sauto').addClass('inactivo');
+             $('.svida').hasClass('inactivo') ? '' : $('.svida').addClass('inactivo');
+             
+             $('#modalS').modal('show');
+             $('.sempleo').fadeIn()
+            
+            })
+            
+         </script>
