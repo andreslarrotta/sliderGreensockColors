@@ -1,0 +1,19 @@
+.container-fluid {
+    padding: 0;
+}
+.background-change {
+    background: #e4241a;
+    width: 100%;
+    height: 300px;
+    position: relative;
+    margin-bottom: 30px;
+}
+.background-change img{
+    position: absolute;
+    width: 300px;
+    right: -19px;
+    bottom: 42px;
+}
+.buttons{
+    text-align: center;
+}
